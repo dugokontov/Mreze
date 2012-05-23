@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  scenario_type: MyString
+  node_type: MyString
+  protocol_in: MyString
+  protocol_out: MyString
+  script: MyText
+
+two:
+  scenario_type: MyString
+  node_type: MyString
+  protocol_in: MyString
+  protocol_out: MyString
+  script: MyText

@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @scenario.title %>
+</p>
+
+<p>
+  <b>Scenario type:</b>
+  <%= @scenario.scenario_type %>
+</p>
+
+<canvas width="1000" height="400" id="simulation"></canvas>
+
+<%= link_to 'Edit', edit_scenario_path(@scenario) %> |
+<%= link_to 'Back', scenarios_path %>

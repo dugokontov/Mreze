@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  scenario_type: MyString
+
+two:
+  title: MyString
+  scenario_type: MyString

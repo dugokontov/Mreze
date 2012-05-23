@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Node:</b>
+  <%= @interface.node_id %>
+</p>
+
+<p>
+  <b>Ip address:</b>
+  <%= @interface.ip_address %>
+</p>
+
+<p>
+  <b>Protocol:</b>
+  <%= @interface.protocol %>
+</p>
+
+<p>
+  <b>Connected to:</b>
+  <%= @interface.connected_to_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_interface_path(@interface) %> |
+<%= link_to 'Back', interfaces_path %>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Scenario type:</b>
+  <%= @rounting_rule.scenario_type %>
+</p>
+
+<p>
+  <b>Node type:</b>
+  <%= @rounting_rule.node_type %>
+</p>
+
+<p>
+  <b>Protocol in:</b>
+  <%= @rounting_rule.protocol_in %>
+</p>
+
+<p>
+  <b>Protocol out:</b>
+  <%= @rounting_rule.protocol_out %>
+</p>
+
+<p>
+  <b>Script:</b>
+  <%= @rounting_rule.script %>
+</p>
+
+
+<%= link_to 'Edit', edit_rounting_rule_path(@rounting_rule) %> |
+<%= link_to 'Back', rounting_rules_path %>

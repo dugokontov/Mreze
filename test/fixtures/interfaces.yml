@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  node_id: 1
+  ip_address: MyString
+  protocol: MyString
+  connected_to_id: 1
+
+two:
+  node_id: 1
+  ip_address: MyString
+  protocol: MyString
+  connected_to_id: 1

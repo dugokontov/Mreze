@@ -1,0 +1,31 @@
+<h1>Listing rounting_rules</h1>
+
+<table>
+  <tr>
+    <th>Scenario type</th>
+    <th>Node type</th>
+    <th>Protocol in</th>
+    <th>Protocol out</th>
+    <th>Script</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @rounting_rules.each do |rounting_rule| %>
+  <tr>
+    <td><%= rounting_rule.scenario_type %></td>
+    <td><%= rounting_rule.node_type %></td>
+    <td><%= rounting_rule.protocol_in %></td>
+    <td><%= rounting_rule.protocol_out %></td>
+    <td><%= rounting_rule.script %></td>
+    <td><%= link_to 'Show', rounting_rule %></td>
+    <td><%= link_to 'Edit', edit_rounting_rule_path(rounting_rule) %></td>
+    <td><%= link_to 'Destroy', rounting_rule, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Rounting rule', new_rounting_rule_path %>
