@@ -5,5 +5,9 @@ $ ->
   if $('canvas#simulation').length
     $.getJSON(location.href)
       .done (response) ->
-        console.log(response)
+        scenario = new Scenario(response);
+        ctx = $('canvas#simulation')[0].getContext('2d')
+        $.when(ctx.drawNodes(scenario.node))
+        .then(->
+          ctx.drawInterfaces(scenario))
     
