@@ -20,6 +20,18 @@ class RountingRulesController < ApplicationController
       format.json { render json: @rounting_rule }
     end
   end
+  
+  # GET /rounting_rules/find
+  def find
+    @rule = nil
+    filter = params.select{|key, value| ['scenario_type', 'node_type', 'protocol_in', 'protocol_out'].include? key}
+    Node::NODE_TYPES.index(params[:node_type]).downto(0) do |i|
+      filter['node_type'] = Node::NODE_TYPES[i]
+      puts filter['node_type']
+      rule = RountingRule.where(filter).first
+      return @rule = rule unless rule === nil
+    end
+  end
 
   # GET /rounting_rules/new
   # GET /rounting_rules/new.json

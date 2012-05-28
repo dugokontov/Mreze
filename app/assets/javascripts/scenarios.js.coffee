@@ -7,7 +7,11 @@ $ ->
       .done (response) ->
         scenario = new Scenario(response);
         ctx = $('canvas#simulation')[0].getContext('2d')
+        ctx.setFontSize(20)
+        ctx.fillStyle = "Black"
         $.when(ctx.drawNodes(scenario.node))
         .then(->
-          ctx.drawInterfaces(scenario))
+          ctx
+            .drawInterfaces(scenario)
+            .drawMessageFlow(scenario))
     

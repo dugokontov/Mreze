@@ -13,19 +13,23 @@
 
   <div class="field">
     <%= f.label :scenario_type %><br />
-    <%= f.text_field :scenario_type %>
+    <%= f.select :scenario_type, Scenario::SCENARIO_TYPES,
+                  :prompt => 'Select scenario type' %>
   </div>
   <div class="field">
     <%= f.label :node_type %><br />
-    <%= f.text_field :node_type %>
+    <%= f.select :node_type, Node::NODE_TYPES,
+                  :prompt => 'Select node type' %>
   </div>
   <div class="field">
     <%= f.label :protocol_in %><br />
-    <%= f.text_field :protocol_in %>
+    <%= f.select :protocol_in, Interface::PROTOCOLS,
+                  :prompt => 'Select input protocol' %>
   </div>
   <div class="field">
     <%= f.label :protocol_out %><br />
-    <%= f.text_field :protocol_out %>
+    <%= f.select :protocol_out, Interface::PROTOCOLS,
+                  :prompt => 'Select output protocol' %>
   </div>
   <div class="field">
     <%= f.label :script %><br />

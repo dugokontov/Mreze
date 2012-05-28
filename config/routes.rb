@@ -1,5 +1,10 @@
 Mreze::Application.routes.draw do
   resources :scenarios
+  resources :rounting_rules do
+    collection do
+      get 'find'
+    end
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
