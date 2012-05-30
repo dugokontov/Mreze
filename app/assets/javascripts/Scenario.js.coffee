@@ -26,7 +26,7 @@ class @Message
     sourceWidth = ctx.measureText(@getSource()).width
     destWidth = ctx.measureText(@getDest()).width
     if @message
-      return Math.max(sourceWidth, destWidth, @getWidth(@message))
+      return Math.max(sourceWidth, destWidth, @message.getWidth(ctx))
     else
       return Math.max(sourceWidth, destWidth)
   getSource: ->

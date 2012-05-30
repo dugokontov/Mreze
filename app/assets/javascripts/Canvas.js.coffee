@@ -7,7 +7,8 @@ class Box
 @CanvasRenderingContext2D::setFontSize = (size) ->
   @font = "#{size}px Times New Roman"
 
-@CanvasRenderingContext2D::nodeDistance = 200
+@CanvasRenderingContext2D::nodeDistance = 250
+@CanvasRenderingContext2D::messagePositionY = 220
 @CanvasRenderingContext2D::interfaceBox = 10
 @CanvasRenderingContext2D::clickables =
   inter: []
@@ -32,22 +33,42 @@ class Box
 
 @CanvasRenderingContext2D::drawMessage = (message, x, y, background = "#ffffff") ->
   @save()
+  @translate(x, y)
   fontSize = 14
   @setFontSize(fontSize)
   @fillStyle = background
   msgWidth = message.getWidth(this)
-  boxHeigth = fontSize * 2 + 6;
-  @fillRect(x, y, msgWidth + 6, boxHeigth)
-  @strokeRect(x, y, msgWidth + 6, boxHeigth)
-  centerX = x + (msgWidth + 6) / 2
+  boxWidht = msgWidth + 6
+  boxHeigth = fontSize * 2 + 6
+  centerX = (msgWidth + 6) / 2
+  if @goToLeft
+    @fillRect(0, 0, -boxWidht, boxHeigth)
+    @strokeRect(0, 0, -boxWidht, boxHeigth)
+    centerX = -centerX
+  else
+    @fillRect(0, 0, boxWidht, boxHeigth)
+    @strokeRect(0, 0, boxWidht, boxHeigth)    
   @fillStyle = "red"
-  @centerText(message.getSource(), centerX, y + fontSize)
+  @centerText(message.getSource(), centerX, fontSize)
   @fillStyle = "blue"
-  @centerText(message.getDest(), centerX, y + 2 * fontSize)
+  @centerText(message.getDest(), centerX, 2 * fontSize)
   @restore()
   if message.message
-    @drawMessage(message.message, x, y + boxHeigth)
-  
+    @drawMessage(message.message, x, y + boxHeigth, '#cdcdcd')
+  return boxWidht
+@CanvasRenderingContext2D::drowArrow = (positionX, boxWidth) ->
+  @save()
+  @translate(positionX, @messagePositionY + 20)
+  if @goToLeft
+    @rotate(Math.PI)
+  @beginPath()
+  @moveTo(boxWidth + 10, 0)
+  @lineTo(boxWidth + 10 + 50, 0)
+  @lineTo(boxWidth + 10 + 50 - 15, -3)
+  @moveTo(boxWidth + 10 + 50 - 15, 3)
+  @lineTo(boxWidth + 10 + 50, 0)
+  @stroke()
+  @restore()
   
 @CanvasRenderingContext2D::drawNodes = (nodes) ->
   dfd = new jQuery.Deferred()
@@ -103,21 +124,32 @@ class Box
   fromInterface = scenario.node[0].interface[0]
   toInterface = scenario.node[scenario.node.length - 1].interface[0]
   message = new Message(fromInterface.ip_address, toInterface.ip_address)
-  messagePositionY = 220
+  
   route = (msg, interfaceFrom) ->
     interfaceBox = that.clickables.getInter(interfaceFrom.id)
-    that.drawMessage(msg, interfaceBox.x, messagePositionY)
+    boxWidth = that.drawMessage(msg, interfaceBox.x, that.messagePositionY)
     nodeTo = scenario.findNodeByInterfaceId(interfaceFrom.connected_to_id)
     if nodeTo.interface.length > 1
+      that.drowArrow(interfaceBox.x, boxWidth)
       interfaceOut = nodeTo.interface.findFirst(-> Number(@id) != interfaceFrom.connected_to_id)
       $.ajax
         url: '/rounting_rules/find'
+        dataType: 'script'
         data:
           scenario_type: scenario.scenario_type
           node_type: nodeTo.node_type
           protocol_in: interfaceFrom.protocol
-          protocol_out: interfaceOut.protocol 
+          protocol_out: interfaceOut.protocol
+      .done ->
+        route(routingRule(msg, nodeTo, interfaceFrom.connected_to_id), interfaceOut)
+    else if not that.goToLeft
+      that.messagePositionY = 320
+      that.goToLeft = true
+      route(new Message(toInterface.ip_address, fromInterface.ip_address), toInterface)
+  @messagePositionY = 220
+  @goToRight = false
   route(message, fromInterface)
+  
     
   
 
