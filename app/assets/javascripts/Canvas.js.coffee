@@ -2,14 +2,11 @@ class Box
   constructor: (@obj, @x, @y, @width, @height = @width)->
     
   isIn: (x,y)->
-    true if @x <= x <= @x + @width and @y <= y <= @y + height
+    true if @x <= x <= @x + @width and @y <= y <= @y + @height
     
 @CanvasRenderingContext2D::setFontSize = (size) ->
   @font = "#{size}px Times New Roman"
 
-@CanvasRenderingContext2D::nodeDistance = 250
-@CanvasRenderingContext2D::messagePositionY = 220
-@CanvasRenderingContext2D::interfaceBox = 10
 @CanvasRenderingContext2D::clickables =
   inter: []
   nodes: []
@@ -26,6 +23,16 @@ class Box
     box1 = @getBox(obj1Name, type, findByFieldname)
     box2 = @getBox(obj2Name, type, findByFieldname)
     return box1.x < box2.x
+  reset: ->
+    @inter = []
+    @nodes = []
+@CanvasRenderingContext2D::initialize = ->
+  @nodeDistance = 250
+  @messagePositionY = 220
+  @interfaceBox = 10
+  @clickables.reset()
+  @clearRect(0, 0, @canvas.width, @canvas.height)
+  @goToLeft = false
 
 @CanvasRenderingContext2D::centerText = (text, x, y) ->
   measure = @measureText(text)
@@ -71,6 +78,7 @@ class Box
   @restore()
   
 @CanvasRenderingContext2D::drawNodes = (nodes) ->
+  @initialize()
   dfd = new jQuery.Deferred()
   startX = 50
   startY = 100
@@ -141,13 +149,15 @@ class Box
           protocol_in: interfaceFrom.protocol
           protocol_out: interfaceOut.protocol
       .done ->
-        route(routingRule(msg, nodeTo, interfaceFrom.connected_to_id), interfaceOut)
+        try
+          route(routingRule(msg, nodeTo, interfaceFrom.connected_to_id), interfaceOut)
+        catch e
+          alert(e)
     else if not that.goToLeft
       that.messagePositionY = 320
       that.goToLeft = true
       route(new Message(toInterface.ip_address, fromInterface.ip_address), toInterface)
   @messagePositionY = 220
-  @goToRight = false
   route(message, fromInterface)
   
     

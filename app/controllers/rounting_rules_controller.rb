@@ -31,6 +31,8 @@ class RountingRulesController < ApplicationController
       rule = RountingRule.where(filter).first
       return @rule = rule unless rule === nil
     end
+    @rule = RountingRule.new
+    @rule.script = 'function() {throw "Rule not found"}'
   end
 
   # GET /rounting_rules/new
