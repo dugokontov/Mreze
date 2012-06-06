@@ -1,5 +1,12 @@
 <h1>Listing scenarios</h1>
-
+<% if @scenarios.count.zero?%>
+<div>
+	No scenarios in database. Please seed data using console
+	<p>
+	<code>rake db:seed</code>
+	</p>
+</div>
+<% else %>
 <table>
   <tr>
     <th>Title</th>
@@ -19,7 +26,8 @@
   </tr>
 <% end %>
 </table>
-
+<% end %>
 <br />
-
-<%= link_to 'New Scenario', new_scenario_path %>
+<div>Add new scenario using seed.db file</div>
+<br />
+<%= link_to 'See routing rules', rounting_rules_url %>

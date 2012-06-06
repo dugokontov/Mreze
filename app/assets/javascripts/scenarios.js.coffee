@@ -3,13 +3,15 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
   if $('canvas#simulation').length
+    dashToWords = (str) ->
+      (str.slice(0,1).toUpperCase() + str.slice(1)).split('_').join(' ')
     createFormFromObj = (obj, uid) ->
       $div = $('<div />', id: uid)
       for name, value of obj
         if obj.hasOwnProperty(name) and not (value instanceof Array)
           $label = $('<label />',
             for: name
-            text: name)
+            text: dashToWords(name) + ':')
           $inputField = $('<input>',
             type: 'text'
             value: value

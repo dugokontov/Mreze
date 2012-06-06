@@ -1,5 +1,12 @@
-<h1>Listing rounting_rules</h1>
-
+<h1>Listing Routing Rules</h1>
+<% if @rounting_rules.count.zero?%>
+<div>
+	No rules in database. Please seed data using console
+	<p>
+	<code>rake db:seed</code>
+	</p>
+</div>
+<% else %>
 <table>
   <tr>
     <th>Scenario type</th>
@@ -25,7 +32,8 @@
   </tr>
 <% end %>
 </table>
-
+<% end %>
 <br />
-
-<%= link_to 'New Rounting rule', new_rounting_rule_path %>
+<%= link_to 'New Routing Rule', new_rounting_rule_path %>
+<br />
+<%= link_to 'See scenarios', scenarios_url %>
