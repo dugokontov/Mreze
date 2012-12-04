@@ -159,19 +159,3 @@ class Box
       route(new Message(toInterface.ip_address, fromInterface.ip_address), toInterface)
   @messagePositionY = 220
   route(message, fromInterface)
-  
-    
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
