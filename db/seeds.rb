@@ -65,7 +65,11 @@ RountingRule.create({
         return Number(this.id) === Number(interfaceInId);
     });
     if (message.destination != interfaceIn.ip_address) {
-        throw node.name + " says: This message is for interface with IP address " + message.destination + ". Mine is: " + interfaceIn.ip_address;
+        throw node.name 
+          + " says: This message is for interface with IP address " 
+          + message.destination 
+          + ". Mine is: " 
+          + interfaceIn.ip_address;
     }
     if (!message.message) {
         throw "Expecting package to contain IPv6 message. There is no IPv6 message.";
@@ -85,7 +89,11 @@ RountingRule.create({
         return Number(this.id) === Number(interfaceInId);
     });
     if (message.destination != interfaceIn.ip_address && message.destination != '192.88.99.1') {
-        throw node.name + " says: This message is for interface with IP address " + message.destination + ". Mine is: " + interfaceIn.ip_address;
+        throw node.name 
+          + " says: This message is for interface with IP address " 
+          + message.destination 
+          + ". Mine is: " 
+          + interfaceIn.ip_address;
     }
     if (!message.message) {
         throw "Expecting package to contain IPv6 message. There is no IPv6 message.";

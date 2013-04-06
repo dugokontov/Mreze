@@ -25,7 +25,7 @@
     <td><%= rounting_rule.node_type %></td>
     <td><%= rounting_rule.protocol_in %></td>
     <td><%= rounting_rule.protocol_out %></td>
-    <td><%= rounting_rule.script %></td>
+    <td><pre><%= rounting_rule.script %></pre></td>
     <td><%= link_to 'Show', rounting_rule %></td>
     <td><%= link_to 'Edit', edit_rounting_rule_path(rounting_rule) %></td>
     <td><%= link_to 'Destroy', rounting_rule, confirm: 'Are you sure?', method: :delete %></td>
