@@ -1,18 +1,29 @@
-<div id="edit-node"></div>
+<div class="row">
+  <div class="span9">
+    <p id="notice"><%= notice %></p>
 
-<p id="notice"><%= notice %></p>
+    <p>
+      <b>Title:</b>
+      <%= @scenario.title %>
+    </p>
 
-<p>
-  <b>Title:</b>
-  <%= @scenario.title %>
-</p>
+    <p>
+      <b>Scenario type:</b>
+      <%= @scenario.scenario_type %>
+    </p>
+    <p>
+      <div class="pull-right">
+        <%= link_to 'List all scenarios', scenarios_path, :class => "btn" %>
+        <%= link_to 'Edit this scenario', edit_scenario_path(@scenario), :class => "btn" %>
+      </div>
+      <button class="btn btn-primary" id="run">Run!</button>
+    </p>
 
-<p>
-  <b>Scenario type:</b>
-  <%= @scenario.scenario_type %>
-</p>
-
-<canvas width="1000" height="400" id="simulation"></canvas>
-<span id='run'>Run</span>
-<%= link_to 'Edit', edit_scenario_path(@scenario) %> |
-<%= link_to 'Back', scenarios_path %>
+    <canvas width="1000" height="400" id="simulation"></canvas>
+  </div>
+  <div class="span3">
+    <div id="edit-node" class="well">
+      Click on node or interface to edit it.
+    </div>
+  </div>
+</div>

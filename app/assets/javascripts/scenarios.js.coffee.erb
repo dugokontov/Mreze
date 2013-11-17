@@ -4,7 +4,7 @@
 $ ->
   if $('canvas#simulation').length
     getSelect = (options, selected, name) ->
-      $select = $('<select />', id: name)
+      $select = $('<select />', id: name, class: "input-medium")
       for own value in options
         $select.append($("<option />",
           value: value
@@ -24,12 +24,13 @@ $ ->
           return $('<input>',
             type: 'text'
             value: value
+            class: "input-medium"
             id: name
           )
     dashToWords = (str) ->
       (str.slice(0,1).toUpperCase() + str.slice(1)).split('_').join(' ')
     createFormFromObj = (obj, uid) ->
-      $div = $('<div />', id: uid)
+      $div = $('<form />', id: uid)
       for name, value of obj
         if obj.hasOwnProperty(name) and not (value instanceof Array)
           $label = $('<label />',

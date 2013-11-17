@@ -1,33 +1,36 @@
-<h1>Listing scenarios</h1>
-<% if @scenarios.count.zero?%>
-<div>
-	No scenarios in database. Please seed data using console
-	<p>
-	<code>rake db:seed</code>
-	</p>
+<%- model_class = Scenario -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
-<% else %>
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Scenario type</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @scenarios.each do |scenario| %>
-  <tr>
-    <td><%= scenario.title %></td>
-    <td><%= scenario.scenario_type %></td>
-    <td><%= link_to 'Show', scenario %></td>
-    <td><%= link_to 'Edit', edit_scenario_path(scenario) %></td>
-    <td><%= link_to 'Destroy', scenario, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:scenario_type) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @scenarios.each do |scenario| %>
+      <tr>
+        <td><%= link_to scenario.title, scenario_path(scenario) %></td>
+        <td><%= scenario.scenario_type %></td>
+        <td><%=l scenario.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_scenario_path(scenario), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      scenario_path(scenario),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
-<% end %>
-<br />
-<div>Add new scenario using seed.db file</div>
-<br />
-<%= link_to 'See routing rules', rounting_rules_url %>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_scenario_path,
+            :class => 'btn btn-primary' %>

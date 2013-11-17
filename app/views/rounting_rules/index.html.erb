@@ -1,39 +1,51 @@
-<h1>Listing Routing Rules</h1>
+<%- model_class = RountingRule -%>
 <% if @rounting_rules.count.zero?%>
 <div>
-	No rules in database. Please seed data using console
-	<p>
-	<code>rake db:seed</code>
-	</p>
+  No rules in database. Please seed data using console
+  <p>
+  <code>rake db:seed</code>
+  </p>
 </div>
 <% else %>
-<table>
-  <tr>
-    <th>Scenario type</th>
-    <th>Node type</th>
-    <th>Protocol in</th>
-    <th>Protocol out</th>
-    <th>Script</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  <div class="page-header">
+    <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:scenario_type) %></th>
+        <th><%= model_class.human_attribute_name(:node_type) %></th>
+        <th><%= model_class.human_attribute_name(:protocol_in) %></th>
+        <th><%= model_class.human_attribute_name(:protocol_out) %></th>
+        <th><%= model_class.human_attribute_name(:script) %></th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @rounting_rules.each do |rounting_rule| %>
+        <tr>
+          <td><%= link_to rounting_rule.scenario_type, rounting_rule_path(rounting_rule) %></td>
+          <td><%= rounting_rule.node_type %></td>
+          <td><%= rounting_rule.protocol_in %></td>
+          <td><%= rounting_rule.protocol_out %></td>
+          <td>
+            <pre><%= rounting_rule.script %></pre>
+          </td>
+          <td>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_rounting_rule_path(rounting_rule), :class => 'btn btn-mini' %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        rounting_rule_path(rounting_rule),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-mini btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 
-<% @rounting_rules.each do |rounting_rule| %>
-  <tr>
-    <td><%= rounting_rule.scenario_type %></td>
-    <td><%= rounting_rule.node_type %></td>
-    <td><%= rounting_rule.protocol_in %></td>
-    <td><%= rounting_rule.protocol_out %></td>
-    <td><pre><%= rounting_rule.script %></pre></td>
-    <td><%= link_to 'Show', rounting_rule %></td>
-    <td><%= link_to 'Edit', edit_rounting_rule_path(rounting_rule) %></td>
-    <td><%= link_to 'Destroy', rounting_rule, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-<% end %>
-<br />
-<%= link_to 'New Routing Rule', new_rounting_rule_path %>
-<br />
-<%= link_to 'See scenarios', scenarios_url %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_rounting_rule_path,
+            :class => 'btn btn-primary' %>
