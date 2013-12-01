@@ -131,7 +131,6 @@ class Box
   that = this
   fromInterface = scenario.node[0].interface[0]
   toInterface = scenario.node[scenario.node.length - 1].interface[0]
-  message = new Message(fromInterface.ip_address, toInterface.ip_address)
   
   route = (msg, interfaceFrom) ->
     interfaceBox = that.clickables.getInter(interfaceFrom.id)
@@ -156,20 +155,23 @@ class Box
     else if not that.goToLeft
       that.messagePositionY = 320
       that.goToLeft = true
-      route(new Message(toInterface.ip_address, fromInterface.ip_address), toInterface)
+      returnMsg = new Message(msg.destination, msg.source)
+      route(returnMsg, nodeTo.interface[0])
+  constructMsg = (node_type, fromInterface, toInterface) ->
+    message = new Message(fromInterface.ip_address, toInterface.ip_address)
+    $.ajax
+      url: '/rounting_rules/package_constructor'
+      dataType: 'script'
+      data:
+        node_type: node_type
+    .done ->
+      try
+        nodeTo = scenario.findNodeByInterfaceId(fromInterface.connected_to_id)
+        msg = routingRule(message, nodeTo, fromInterface.connected_to_id)
+        route(msg, fromInterface)
+      catch e
+        alert e
 
   @messagePositionY = 220
-
-  $.ajax
-    url: '/rounting_rules/package_constructor'
-    dataType: 'script'
-    data:
-      node_type: scenario.node[0].node_type
-  .done ->
-    try
-      nodeTo = scenario.findNodeByInterfaceId(fromInterface.connected_to_id)
-      msg = routingRule(message, nodeTo, fromInterface.connected_to_id)
-      route(msg, fromInterface)
-    catch e
-      alert e
+  constructMsg(scenario.node[0].node_type, fromInterface, toInterface)
     

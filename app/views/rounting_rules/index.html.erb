@@ -18,18 +18,20 @@
         <th><%= model_class.human_attribute_name(:protocol_in) %></th>
         <th><%= model_class.human_attribute_name(:protocol_out) %></th>
         <th><%= model_class.human_attribute_name(:script) %></th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <% @rounting_rules.each do |rounting_rule| %>
         <tr>
-          <td><%= link_to rounting_rule.scenario_type, rounting_rule_path(rounting_rule) %></td>
+          <td><%= rounting_rule.scenario_type || 'Message constructor' %></td>
           <td><%= rounting_rule.node_type %></td>
           <td><%= rounting_rule.protocol_in %></td>
           <td><%= rounting_rule.protocol_out %></td>
           <td>
             <pre><%= rounting_rule.script %></pre>
           </td>
+          <td><%= link_to 'View', rounting_rule_path(rounting_rule) %></td>
         </tr>
       <% end %>
     </tbody>

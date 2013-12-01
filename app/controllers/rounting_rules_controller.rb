@@ -39,7 +39,13 @@ class RountingRulesController < ApplicationController
   def package_constructor
     @rule = nil
     Node::NODE_TYPES.index(params[:node_type]).downto(0) do |i|
-      @rule = RountingRule.where(:node_type => Node::NODE_TYPES[i]).first
+      puts "search for node: #{Node::NODE_TYPES[i]}"
+      @rule = RountingRule.where(
+        :node_type => Node::NODE_TYPES[i],
+        :scenario_type => nil,
+        :protocol_in => nil,
+        :protocol_out => nil
+      ).first
       break unless @rule === nil
     end
     if @rule === nil
