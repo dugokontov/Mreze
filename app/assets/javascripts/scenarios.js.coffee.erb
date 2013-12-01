@@ -5,7 +5,7 @@ $ ->
   if $('canvas#simulation').length
     getSelect = (options, selected, name) ->
       $select = $('<select />', id: name, class: "input-medium")
-      for own value of options
+      for own index, value of options
         $select.append($("<option />",
           value: value
           text: value
