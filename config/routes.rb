@@ -3,6 +3,7 @@ Mreze::Application.routes.draw do
   resources :rounting_rules do
     collection do
       get 'find'
+      get 'package_constructor'
     end
   end
   # The priority is based upon order of creation:

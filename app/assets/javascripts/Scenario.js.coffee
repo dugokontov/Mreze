@@ -33,6 +33,10 @@ class @Message
     @sourceLabel + @source
   getDest: ->
     @destLabel + @destination
+  getSourceProtocol: ->
+    if @source.indexOf(':') == -1 then "ipv4" else "ipv6"
+  getDestProtocol: ->
+    if @destination.indexOf(':') == -1 then "ipv4" else "ipv6"
     
 @Message::sourceLabel = "source: "
 @Message::destLabel = "dest: "

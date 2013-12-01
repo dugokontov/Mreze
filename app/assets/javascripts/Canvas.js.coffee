@@ -63,7 +63,7 @@ class Box
   if message.message
     @drawMessage(message.message, x, y + boxHeigth, '#cdcdcd')
   return boxWidht
-@CanvasRenderingContext2D::drowArrow = (positionX, boxWidth) ->
+@CanvasRenderingContext2D::drawArrow = (positionX, boxWidth) ->
   @save()
   @translate(positionX, @messagePositionY + 20)
   if @goToLeft
@@ -138,7 +138,7 @@ class Box
     boxWidth = that.drawMessage(msg, interfaceBox.x, that.messagePositionY)
     nodeTo = scenario.findNodeByInterfaceId(interfaceFrom.connected_to_id)
     if nodeTo.interface.length > 1
-      that.drowArrow(interfaceBox.x, boxWidth)
+      that.drawArrow(interfaceBox.x, boxWidth)
       interfaceOut = nodeTo.interface.findFirst(-> Number(@id) != interfaceFrom.connected_to_id)
       $.ajax
         url: '/rounting_rules/find'
@@ -152,10 +152,24 @@ class Box
         try
           route(routingRule(msg, nodeTo, interfaceFrom.connected_to_id), interfaceOut)
         catch e
-          alert(e)
+          alert e
     else if not that.goToLeft
       that.messagePositionY = 320
       that.goToLeft = true
       route(new Message(toInterface.ip_address, fromInterface.ip_address), toInterface)
+
   @messagePositionY = 220
-  route(message, fromInterface)
+
+  $.ajax
+    url: '/rounting_rules/package_constructor'
+    dataType: 'script'
+    data:
+      node_type: scenario.node[0].node_type
+  .done ->
+    try
+      nodeTo = scenario.findNodeByInterfaceId(fromInterface.connected_to_id)
+      msg = routingRule(message, nodeTo, fromInterface.connected_to_id)
+      route(msg, fromInterface)
+    catch e
+      alert e
+    
