@@ -5,7 +5,7 @@ $ ->
   if $('canvas#simulation').length
     getSelect = (options, selected, name) ->
       $select = $('<select />', id: name, class: "input-medium")
-      for own value in options
+      for own value of options
         $select.append($("<option />",
           value: value
           text: value
@@ -15,10 +15,10 @@ $ ->
     getInputField = (value, name) ->
       switch name
         when "node_type"
-          values = ['computer', 'router', 'relay_router', 'isatap_host', 'isatap_router']
+          values = <%= Node::NODE_TYPES.to_json %>
           return getSelect(values, value, name)
         when "protocol"
-          values = ['ipv4', 'ipv6']
+          values = <%= Interface::PROTOCOLS.to_json %>
           return getSelect(values, value, name)
         else
           return $('<input>',
